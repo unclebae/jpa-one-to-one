@@ -14,7 +14,7 @@ import java.util.Optional;
 public class DemoTestJpaApplication implements CommandLineRunner {
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     public static void main(String[] args) {
         SpringApplication.run(DemoTestJpaApplication.class, args);
@@ -49,16 +49,13 @@ public class DemoTestJpaApplication implements CommandLineRunner {
                 .build());
 
         log.info("new user: " + user1);
-        final User save = userRepository.save(user1);
+        final User save = userService.save(user1);
 
         log.info("Save User:" + save);
 
-        final Optional<User> userInfos = userRepository.findById(save.getId());
+        final Optional<User> userInfos = userService.getUser(save.getId());
         if (userInfos.isPresent()) {
             log.info("Get User: " + userInfos.get());
-//            log.info("Get Address of 0: " + userInfos.get().getAddress().get(0)); // 에러가 난다.
         }
-
-
     }
 }

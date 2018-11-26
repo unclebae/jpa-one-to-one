@@ -2,10 +2,10 @@ package com.example.jpa.demotestjpa;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,4 +23,19 @@ public class User {
     String name;
 
     LocalDateTime joinedAt;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "userId")
+    List<Address> address;
+
+    public void addAddress(Address address) {
+        if (this.address == null) {
+            this.address = new ArrayList<>();
+        }
+
+        this.address.add(address);
+    }
+
+
 }
+

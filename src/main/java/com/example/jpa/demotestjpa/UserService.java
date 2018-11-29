@@ -20,6 +20,7 @@ public class UserService {
         if (userInfos.isPresent()) {
             log.info("Get User: " + userInfos.get());
             log.info("Get Address of 0: " + userInfos.get().getAddress().get(0));
+            log.info("Get profile: " + userInfos.get().getUserProfile());
         }
 
         return userInfos;

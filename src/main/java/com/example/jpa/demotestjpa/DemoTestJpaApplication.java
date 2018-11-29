@@ -48,6 +48,14 @@ public class DemoTestJpaApplication implements CommandLineRunner {
                 .detail("직은길빌딩 101")
                 .build());
 
+        user1.setUserProfile(UserProfile.builder()
+                .age(30)
+                .weight(70)
+                .tall(177)
+                .createdAt(LocalDateTime.now())
+                .build());
+
+
         log.info("new user: " + user1);
         final User save = userService.save(user1);
 

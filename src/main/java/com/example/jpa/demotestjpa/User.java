@@ -9,10 +9,10 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 @Entity
 public class User {
 
@@ -24,9 +24,16 @@ public class User {
 
     LocalDateTime joinedAt;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "userId")
     List<Address> address;
+
+    @OneToOne(
+            mappedBy = "user",
+            orphanRemoval = true,
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    UserProfile userProfile;
 
     public void addAddress(Address address) {
         if (this.address == null) {
@@ -34,6 +41,17 @@ public class User {
         }
 
         this.address.add(address);
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        if (userProfile == null) {
+            if (this.userProfile != null) {
+                this.userProfile.setUser(null);
+            }
+        } else {
+            userProfile.setUser(this);
+        }
+        this.userProfile = userProfile;
     }
 
 

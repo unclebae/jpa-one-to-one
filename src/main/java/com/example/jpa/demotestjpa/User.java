@@ -35,6 +35,14 @@ public class User {
             cascade = CascadeType.ALL)
     UserProfile userProfile;
 
+
+    @OneToOne(
+            mappedBy = "user",
+            orphanRemoval = true,
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    UserCurrentJob userCurrentJob;
+
     public void addAddress(Address address) {
         if (this.address == null) {
             this.address = new ArrayList<>();
@@ -54,6 +62,16 @@ public class User {
         this.userProfile = userProfile;
     }
 
+    public void setUserCurrentJob(UserCurrentJob userCurrentJob) {
+        if (userCurrentJob == null) {
+            if (this.userCurrentJob != null) {
+                this.userCurrentJob.setUser(null);
+            }
+        } else {
+            userCurrentJob.setUser(this);
+        }
+        this.userCurrentJob = userCurrentJob;
+    }
 
 }
 

@@ -55,6 +55,14 @@ public class DemoTestJpaApplication implements CommandLineRunner {
                 .createdAt(LocalDateTime.now())
                 .build());
 
+        user1.setUserCurrentJob(UserCurrentJob.builder()
+                .companyName("SKT")
+                .jobName("Programmer")
+                .title("Developer")
+                .joinedAt(LocalDateTime.now())
+                .build()
+                );
+
 
         log.info("new user: " + user1);
         final User save = userService.save(user1);
